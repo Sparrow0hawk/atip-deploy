@@ -1,5 +1,5 @@
 variable "project" {
-  default = "test-deploy-atip"
+  default = "test-deploy-atip2"
 }
 
 variable "credentials_file" {}
