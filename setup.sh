@@ -13,10 +13,10 @@ gcloud beta billing projects link $PROJECT_ID \
  --billing-account $BILLING_ACCOUNT_ID
 
 gcloud services enable \
-    run.googleapis.com \
-    iap.googleapis.com \
+    storage.googleapis.com \
+    secretmanager.googleapis.com \
     iam.googleapis.com \
-    artifactregistry.googleapis.com
+    cloudbuild.googleapis.com
 
 SERVICE_ACCT=deploy-atiper
 
