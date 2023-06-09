@@ -2,7 +2,7 @@ PROJECT_ID="test-deploy-atip"
 PROJECT_NAME="Test deploy ATIP"
 
 # create project in gcp
-gcloud projects create $PROJECT_ID  --name=$PROJECT_NAME
+gcloud projects create $PROJECT_ID  --name="$PROJECT_NAME"
 
 # set current project with gcloud as this project
 gcloud config set project $PROJECT_ID
