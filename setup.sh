@@ -1,4 +1,4 @@
-PROJECT_ID="test-deploy-atip"
+PROJECT_ID="test-deploy-atip2"
 PROJECT_NAME="Test deploy ATIP"
 
 # create project in gcp
