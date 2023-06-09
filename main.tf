@@ -54,10 +54,8 @@ resource "google_storage_bucket" "logs-bucket" {
 
 data "google_iam_policy" "admin" {
   binding {
-    role = "roles/storage.admin"
-    members = [
-      "user:alexjcoleman@gmail.com",
-    ]
+    role    = "roles/storage.admin"
+    members = ["serviceAccount:${var.service-account}@${var.project}.iam.gserviceaccount.com"]
   }
 }
 
