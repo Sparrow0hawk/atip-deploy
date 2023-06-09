@@ -132,5 +132,37 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
     }
   }
 
-  filename = "cloudbuild.yaml"
+  build {
+    step {
+      # Step 1: Pull the repository from GitHub
+      name = "gcr.io/cloud-builders/git"
+      args = ["clone", "https://github.com/Sparrow0hawk/atip.git", "source"]
+    }
+    # Step 2: Install dependencies
+    step {
+      name       = "node:14"
+      entrypoint = "npm"
+      args       = ["install"]
+      dir        = "source"
+    }
+    # Step 3= Run tests
+    step {
+      name       = "node:14"
+      entrypoint = "npm"
+      args       = ["run", "test"]
+      dir        = "source"
+    }
+    # Step 4: Build the project
+    step {
+      name       = "node:14"
+      entrypoint = "npm"
+      args       = ["run", "build"]
+      dir        = "source"
+    }
+    # Step 5: Upload the "dist" folder to Cloud Storage
+    step {
+      name = "gcr.io/cloud-builders/gsutil"
+      args = ["cp", "-r", "source/dist", google_storage_bucket.static-site.url]
+    }
+  }
 }
