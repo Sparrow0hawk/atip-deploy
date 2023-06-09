@@ -62,7 +62,7 @@ data "google_iam_policy" "admin" {
 ## bucket IAM
 
 resource "google_storage_bucket_iam_policy" "policy" {
-  bucket      = google_storage_bucket.logs-bucket
+  bucket      = google_storage_bucket.logs-bucket.name
   policy_data = data.google_iam_policy.admin.policy_data
 }
 
