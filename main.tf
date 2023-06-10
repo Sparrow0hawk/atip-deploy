@@ -123,7 +123,7 @@ resource "google_cloudbuildv2_repository" "my-repository" {
   provider          = google-beta
   name              = "atip-fork"
   parent_connection = google_cloudbuildv2_connection.my-connection.id
-  remote_uri        = "https://github.com/sparrow0hawk/atip.git"
+  remote_uri        = "https://github.com/Sparrow0hawk/atip.git"
 }
 
 resource "google_cloudbuild_trigger" "repo-trigger" {
