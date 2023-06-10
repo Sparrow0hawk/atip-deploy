@@ -5,11 +5,11 @@ variable "project" {
 variable "credentials_file" {}
 
 variable "region" {
-  default = "europe-west2"
+  default = "europe-west1"
 }
 
 variable "zone" {
-  default = "europe-west2-a"
+  default = "europe-west1-a"
 }
 
 variable "secret_file" {
