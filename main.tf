@@ -23,6 +23,12 @@ provider "google-beta" {
   zone    = var.zone
 }
 
+# data
+
+data "google_project" "project" {
+  project_id = var.project
+}
+
 ## cloud buckets
 
 resource "google_storage_bucket" "static-site" {
