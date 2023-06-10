@@ -150,6 +150,12 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
       args       = ["install"]
       dir        = "source"
     }
+    step {
+      name       = "node:14"
+      entrypoint = "npx"
+      args       = ["playwright", "install", "--with-deps"]
+      dir        = "source"
+    }
     # Step 3= Run tests
     step {
       name       = "node:14"
