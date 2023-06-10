@@ -16,7 +16,8 @@ gcloud services enable \
     storage.googleapis.com \
     secretmanager.googleapis.com \
     iam.googleapis.com \
-    cloudbuild.googleapis.com
+    cloudbuild.googleapis.com \
+    cloudresourcemanager.googleapis.com
 
 SERVICE_ACCT=deploy-atiper
 
