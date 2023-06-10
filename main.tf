@@ -169,5 +169,6 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
       name = "gcr.io/cloud-builders/gsutil"
       args = ["cp", "-r", "source/dist", google_storage_bucket.static-site.url]
     }
+    logs_bucket = google_storage_bucket.logs-bucket.url
   }
 }
