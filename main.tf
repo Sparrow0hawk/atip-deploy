@@ -170,7 +170,13 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
     # Step 2: Install deps and run playwright tests
     step {
       name   = "mcr.microsoft.com/playwright:v1.35.0-jammy"
-      script = "npm install -g wasm-pack && npm ci && npx playwright install --with-deps && npm run test"
+      script = "npm install -g wasm-pack && npm run wasm-release"
+      dir    = "source"
+    }
+
+    step {
+      name   = "mcr.microsoft.com/playwright:v1.35.0-jammy"
+      script = "npm ci && npx playwright install --with-deps && npm run test"
       dir    = "source"
     }
 
