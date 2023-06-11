@@ -67,14 +67,33 @@ data "google_iam_policy" "admin" {
     ]
   }
 }
+
+data "google_iam_policy" "static-site" {
+  binding {
+    role = "roles/storage.admin"
+    members = [
+      "serviceAccount:${var.service-account}@${var.project}.iam.gserviceaccount.com",
+      "projectOwner:${var.project}"
+    ]
+  }
+  binding {
+    role = "roles/storage.objectViewer"
+    members = [
+      "allUsers",
+    ]
   }
 }
 
 ## bucket IAM
 
-resource "google_storage_bucket_iam_policy" "policy" {
+resource "google_storage_bucket_iam_policy" "logs-bucket-admin-policy" {
   bucket      = google_storage_bucket.logs-bucket.name
   policy_data = data.google_iam_policy.admin.policy_data
+}
+
+resource "google_storage_bucket_iam_policy" "static-site-policy" {
+  bucket      = google_storage_bucket.static-site.name
+  policy_data = data.google_iam_policy.static-site.policy_data
 }
 
 # Create a secret containing the personal access token and grant permissions to the Service Agent 
