@@ -176,7 +176,7 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
 
     # Step 4: Build the project
     step {
-      name       = "node:14"
+      name       = "node:18"
       entrypoint = "npm"
       args       = ["run", "build"]
       dir        = "source"
