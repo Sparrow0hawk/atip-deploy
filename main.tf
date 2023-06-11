@@ -166,18 +166,23 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
       # Step 1: Pull the repository from GitHub
       name = "gcr.io/cloud-builders/git"
       args = ["clone", "https://github.com/Sparrow0hawk/atip.git", "source"]
+      id   = "checkout"
     }
     # Step 2: Install deps and run playwright tests
     step {
-      name   = "mcr.microsoft.com/playwright:v1.35.0-jammy"
-      script = "npm install -g wasm-pack && npm run wasm-release"
-      dir    = "source"
+      name     = "node:18"
+      script   = "npm install -g wasm-pack && npm run wasm-release"
+      dir      = "source"
+      id       = "wasm"
+      wait_for = ["checkout"]
     }
 
     step {
-      name   = "mcr.microsoft.com/playwright:v1.35.0-jammy"
-      script = "npm ci && npx playwright install --with-deps && npm run test"
-      dir    = "source"
+      name     = "mcr.microsoft.com/playwright:v1.35.0-jammy"
+      script   = "npm ci && npx playwright install --with-deps && npm run test"
+      dir      = "source"
+      id       = "playwright"
+      wait_for = ["wasm"]
     }
 
     # Step 4: Build the project
@@ -186,11 +191,15 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
       entrypoint = "npm"
       args       = ["run", "build"]
       dir        = "source"
+      id         = "build"
+      wait_for   = ["wasm"]
     }
     # Step 5: Upload the "dist" folder to Cloud Storage
     step {
-      name = "gcr.io/cloud-builders/gsutil"
-      args = ["cp", "-r", "source/dist", google_storage_bucket.static-site.url]
+      name     = "gcr.io/cloud-builders/gsutil"
+      args     = ["cp", "-r", "source/dist", google_storage_bucket.static-site.url]
+      id       = "deploy"
+      wait_for = ["build"]
     }
     logs_bucket = google_storage_bucket.logs-bucket.url
   }
