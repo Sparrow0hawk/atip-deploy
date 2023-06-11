@@ -170,11 +170,12 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
     }
     # Step 2: Install deps and run playwright tests
     step {
-      name     = "node:18"
-      script   = "npm install -g wasm-pack && npm run wasm-release"
-      dir      = "source"
-      id       = "wasm"
-      wait_for = ["checkout"]
+      name       = "ghcr.io/sparrow0hawk/rust-wasm-packbase:main"
+      entrypoint = "npm"
+      args       = ["run", "wasm-release"]
+      dir        = "source"
+      id         = "wasm"
+      wait_for   = ["checkout"]
     }
 
     step {
