@@ -184,7 +184,7 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
       dir      = "source"
       id       = "playwright"
       wait_for = ["wasm"]
-      timeout  = 420
+      timeout  = "420s"
     }
 
     # Step 4: Build the project
