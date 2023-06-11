@@ -193,7 +193,7 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
       args       = ["run", "build"]
       dir        = "source"
       id         = "build"
-      wait_for   = ["wasm"]
+      wait_for   = ["playwright"]
     }
     # Step 5: Upload the "dist" folder to Cloud Storage
     step {
