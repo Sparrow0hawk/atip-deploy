@@ -204,5 +204,6 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
       wait_for = ["build"]
     }
     logs_bucket = google_storage_bucket.logs-bucket.url
+    timeout     = "1200s"
   }
 }
