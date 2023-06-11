@@ -167,26 +167,13 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
       name = "gcr.io/cloud-builders/git"
       args = ["clone", "https://github.com/Sparrow0hawk/atip.git", "source"]
     }
-    # Step 2: Install dependencies
+    # Step 2: Install deps and run playwright tests
     step {
-      name       = "node:14"
-      entrypoint = "npm"
-      args       = ["install"]
-      dir        = "source"
+      name   = "mcr.microsoft.com/playwright:v1.35.0-jammy"
+      script = "npm install -g wasm-pack && npm ci && npx playwright install --with-deps && npm run test"
+      dir    = "source"
     }
-    step {
-      name       = "node:14"
-      entrypoint = "npx"
-      args       = ["playwright", "install", "--with-deps"]
-      dir        = "source"
-    }
-    # Step 3= Run tests
-    step {
-      name       = "node:14"
-      entrypoint = "npm"
-      args       = ["run", "test"]
-      dir        = "source"
-    }
+
     # Step 4: Build the project
     step {
       name       = "node:14"
