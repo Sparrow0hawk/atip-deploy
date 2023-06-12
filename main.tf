@@ -200,7 +200,7 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
     # Step 5: Upload the "dist" folder to Cloud Storage
     step {
       name     = "gcr.io/cloud-builders/gsutil"
-      args     = ["cp", "-r", "source/dist", google_storage_bucket.static-site.url]
+      args     = ["cp", "-r", "source/dist/*", google_storage_bucket.static-site.url]
       id       = "deploy"
       wait_for = ["build"]
     }
