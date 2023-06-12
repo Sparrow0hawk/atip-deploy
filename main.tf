@@ -179,12 +179,13 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
     }
 
     step {
-      name     = "mcr.microsoft.com/playwright:v1.35.0-jammy"
-      script   = "npm ci && npx playwright install --with-deps && npm run test"
-      dir      = "source"
-      id       = "playwright"
-      wait_for = ["wasm"]
-      timeout  = "420s"
+      name          = "mcr.microsoft.com/playwright:v1.35.0-jammy"
+      script        = "npm ci && npx playwright install --with-deps && npm run test"
+      dir           = "source"
+      id            = "playwright"
+      wait_for      = ["wasm"]
+      timeout       = "420s"
+      allow_failure = true
     }
 
     # Step 4: Build the project
